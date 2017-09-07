@@ -1,0 +1,34 @@
+{
+  "name": "bigmoment",
+  "version": "1.0.0",
+  "description": "Date manipulation that can track the age of the universe",
+  "main": "bigmoment.js",
+  "scripts": {
+    "test": "ava"
+  },
+  "keywords": [
+    "date",
+    "time",
+    "format",
+    "moment",
+    "bya",
+    "mya",
+    "history",
+    "timezone",
+    "geological",
+    "dates",
+    "millennium",
+    "century",
+    "decade",
+    "timeline"
+  ],
+  "author": "Orlando Groppo",
+  "license": "ISC",
+  "devDependencies": {
+    "ava": "^0.22.0"
+  },
+  "dependencies": {
+    "moment": "^2.18.1",
+    "ordinalize": "^1.0.1"
+  }
+}
