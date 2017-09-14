@@ -1,6 +1,6 @@
 import test from 'ava';
 
-const bigmoment = require('../lib/bigmoment');
+const bigmoment = require('../bigmoment');
 
 test('bigmoment century test', t => {
 
