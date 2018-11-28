@@ -35,11 +35,12 @@ test('bigmoment isCentury test', t => {
 	t.false(bigmoment('0').isCentury());
 	t.false(bigmoment('-0').isCentury());
 	t.false(bigmoment('1').isCentury());
-	t.true(bigmoment('10').isCentury());
-	t.true(bigmoment('-10').isCentury());
 	t.false(bigmoment('100').isCentury());
 	t.false(bigmoment('-101').isCentury());
 	t.false(bigmoment('1000').isCentury());
 	t.false(bigmoment('-1021').isCentury());
 	t.false(bigmoment('-1021-11-22').isCentury());
+
+  t.true(bigmoment('10').isCentury());
+  t.true(bigmoment('-10').isCentury());
 });

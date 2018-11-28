@@ -3,17 +3,17 @@ const ordinalize = require('ordinalize');
 exports.decade = function(options = {}){
 	if(!this.hasDecade())
 		return undefined;
-	
-	const year = this.year();	
+
+	const year = this.year();
 	let decadeIndex = Math.floor( year / 10 );
 
 	if(options.format === 'cultural'){
 
 		let decade = '';
 		if(year >= 0){
-			decade = `'${this._input.slice(2, 3)}0s`; 
-	  	}else{
-			decade = `'${this._input.slice(3, 4)}0s`; 
+			decade = `'${this.format('YYYY').slice(2, 3)}0s`;
+	  } else {
+			decade = `'${this._i.padEnd(5, '0').slice(3, 4)}0s`;
 		}
 
 		return decade;
@@ -23,9 +23,9 @@ exports.decade = function(options = {}){
 
 		let decade = '';
 		if(year >= 0){
-			decade = `${this._input.slice(0, 3)}0s`; 
-	  	}else{
-			decade = `${this._input.slice(1, 4)}0s`; 
+			decade = `${this.format('YYYY').slice(0, 3)}0s`;
+	  } else {
+			decade = `${this._i.padEnd(5, '0').slice(1, 4)}0s`;
 		}
 
 		return decade;
@@ -35,9 +35,13 @@ exports.decade = function(options = {}){
 }
 
 exports.isDecade = function(){
-	return new RegExp("^-?[0-9]{3}$").test(this._input)
+  let input = this._i
+	return typeof input === 'string' && new RegExp("^-?[0-9]{3}$").test(input)
 }
 
 exports.hasDecade = function(){
-	return new RegExp("^-?[0-9]{3,}$").test(this._input)
+  let input = this._i
+  if(typeof input !== 'string')
+    return true
+	return new RegExp("^-?[0-9]{3}").test(input)
 }

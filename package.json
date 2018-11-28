@@ -1,6 +1,6 @@
 {
   "name": "bigmoment",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "Date manipulation that can track the age of the universe",
   "main": "bigmoment.js",
   "scripts": {
@@ -28,7 +28,7 @@
     "ava": "^0.22.0"
   },
   "dependencies": {
-    "moment": "^2.18.1",
+    "moment": "^2.22.2",
     "ordinalize": "^1.0.1"
   }
 }

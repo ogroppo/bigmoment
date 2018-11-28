@@ -8,7 +8,7 @@ test('bigmoment decade test', t => {
 	t.is(bigmoment('-0').decade(), undefined);
 	t.is(bigmoment('10').decade(), undefined);
 	t.is(bigmoment('-10').decade(), undefined);
-	
+
 	t.is(bigmoment('-0001').decade(), -1);
 	t.is(bigmoment('-0010').decade(), -1);
 	t.is(bigmoment('1000').decade(), 100);
@@ -27,5 +27,7 @@ test('bigmoment decade test', t => {
 	t.is(bigmoment('-0010').decade({format: 'cultural'}), '\'10s');
 	t.is(bigmoment('1000').decade({format: 'cultural'}), '\'00s');
 	t.is(bigmoment('1030').decade({format: 'cultural'}), '\'30s');
+
+  t.is(bigmoment('1980-11-28').decade({format: 'cultural'}), '\'80s');
 
 });

@@ -1,40 +1,45 @@
 const moment = require('moment');
-
-const config = require('./lib/config');
-const {isValidBigDate, isPartialDate} = require('./lib/date');
+const isWeekInput = require('./lib/isWeekInput');
+const isPartialDate = require('./lib/isPartialDate');
 
 function bigmoment(input){
-	if(isValidBigDate(input)){
-		var momentObject;
-		if(isPartialDate(input)){ //not a complete moment date
-			var momentInput;
+  if(typeof input !== 'string'){
+    // undefined, integer, new Date()
+    return moment(input);
+  }
 
-			if(input[0] === "-"){
-				momentInput = input.padEnd(4, "0") + "1"; 
-				//eg -1 is padded to -1001 because it mostly belongs to -2000 ~ -1001 (2nd mill BCE)
-				//eg -01 is padded to -0101 because it mostly belongs to -0200 ~ -0101 (2nd century BCE)
-				//eg -001 is padded to -0011 because it mostly belongs to -0020 ~ -0011 (2nd decade BCE)
-			}else{
-				momentInput = input.padEnd(4, "0");
-			}
-			
-			momentObject = moment(momentInput, config.MomentFormat);
-
+	if(isPartialDate(input)){ //not a complete moment string date
+		var momentInput;
+		if(input[0] === "-"){
+      let inputLength = input.length
+			momentInput = (input.substr(0, inputLength-1) + (parseInt(input.substr(-1)) + 1).toString()).padEnd(5, "0");
+      //eg -0 => -1000 (~ -0001) (1st mill BCE)
+			//eg -1 => -2000 (~ -1001) (2nd mill BCE)
+			//eg -01 => -0200 (~ -0101) (2nd century BCE)
+			//eg -001 => -0020 (~ -0011) (2nd decade BCE)
 		}else{
-			momentObject = moment(input, config.MomentFormat);
+      //eg 0 is padded to 0000 => 0000 ~ 0999 (1st mill CE)
+			momentInput = input.padEnd(4, "0");
 		}
 
-		if(!momentObject.isValid())
-			throw "Invalid date";
-		
-		momentObject._input = input;
-
+    let momentObject = moment(momentInput, "Y");
+    momentObject._i = input;
 		return momentObject;
-	}else
-		throw "Invalid date format";
+	}
+
+  if(isWeekInput(input)){
+    return moment(input);
+  }
+
+  return moment(input, "Y-MM-DD HH:mm:ss");
 };
 
 bigmoment.prototype = Object.getPrototypeOf(moment());
+
+bigmoment.prototype.getRange = require('./proto/getRange');
+
+bigmoment.prototype.getFormatName = require('./proto/getFormatName');
+bigmoment.prototype.mostRecentDate = require('./proto/mostRecentDate');
 
 const {millennium, isMillennium} = require('./proto/millennium');
 
@@ -52,5 +57,29 @@ const {decade, isDecade, hasDecade} = require('./proto/decade');
 bigmoment.prototype.decade = decade;
 bigmoment.prototype.isDecade = isDecade;
 bigmoment.prototype.hasDecade = hasDecade;
+
+const {isYear} = require('./proto/year');
+
+bigmoment.prototype.isYear = isYear;
+
+const {isMonth} = require('./proto/month');
+
+bigmoment.prototype.isMonth = isMonth;
+
+bigmoment.prototype.isWeek = require('./proto/isWeek');
+
+const {isDay} = require('./proto/day');
+
+bigmoment.prototype.isDay = isDay;
+
+bigmoment.prototype.isHour = require('./proto/isHour');
+
+const {isMinute} = require('./proto/minute');
+
+bigmoment.prototype.isMinute = isMinute;
+
+const {isSecond} = require('./proto/second');
+
+bigmoment.prototype.isSecond = isSecond;
 
 module.exports = bigmoment;
