@@ -31,6 +31,10 @@ exports.decade = function(options = {}){
 		return decade;
 	}
 
+  if(options.format){
+    this.format('YYYY').slice(0, -1);
+  }
+
 	return decadeIndex;
 }
 

@@ -11,14 +11,14 @@ exports.century = function(options = {}){
 			let centuryNumber = centuryIndex + 1;
 			return ordinalize(centuryNumber) + ' CE';
 		}
-  	}else{
+  }else{
 		if(options.format === 'ordinal'){
 			let centuryNumber = Math.abs(centuryIndex);
 			return ordinalize(centuryNumber) + ' BCE';
 		}
 	}
 
-  	return centuryIndex;
+  return centuryIndex;
 }
 
 exports.isCentury = function(){

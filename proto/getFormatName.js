@@ -1,4 +1,7 @@
 module.exports = function(){
+  if(this._formatName)
+    return this._formatName;
+
   if(this.isMillennium())
     return 'millennium'
 

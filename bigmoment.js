@@ -1,5 +1,5 @@
 const moment = require('moment');
-const isWeekInput = require('./lib/isWeekInput');
+const isWeek = require('./lib/isWeek');
 const isPartialDate = require('./lib/isPartialDate');
 
 function bigmoment(input){
@@ -27,14 +27,20 @@ function bigmoment(input){
 		return momentObject;
 	}
 
-  if(isWeekInput(input)){
-    return moment(input);
+  if(isWeek(input)){
+    let momentObject = moment(input);
+    momentObject._formatName = 'week';
+    return momentObject;
   }
 
   return moment(input, "Y-MM-DD HH:mm:ss");
 };
 
 bigmoment.prototype = Object.getPrototypeOf(moment());
+
+bigmoment.prototype.daysInYear = function(){
+  return this.isLeapYear() ? 366 : 365;
+};
 
 bigmoment.prototype.getRange = require('./proto/getRange');
 
@@ -65,8 +71,6 @@ bigmoment.prototype.isYear = isYear;
 const {isMonth} = require('./proto/month');
 
 bigmoment.prototype.isMonth = isMonth;
-
-bigmoment.prototype.isWeek = require('./proto/isWeek');
 
 const {isDay} = require('./proto/day');
 
