@@ -2,7 +2,7 @@ const moment = require('moment');
 const isWeek = require('./lib/isWeek');
 const isPartialDate = require('./lib/isPartialDate');
 
-function bigmoment(input){
+function bigmoment(input, options = {}){
   if(typeof input !== 'string'){
     // undefined, integer, new Date()
     return moment(input);
@@ -33,7 +33,9 @@ function bigmoment(input){
     return momentObject;
   }
 
-  return moment(input, "Y-MM-DD HH:mm:ss");
+  let defaultDateFormat = options.dateFormat || "Y-MM-DD HH:mm:ss"
+
+  return moment(input, defaultDateFormat);
 };
 
 bigmoment.prototype = Object.getPrototypeOf(moment());
