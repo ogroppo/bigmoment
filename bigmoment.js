@@ -1,12 +1,15 @@
 const moment = require('moment');
 const isWeek = require('./lib/isWeek');
 const isPartialDate = require('./lib/isPartialDate');
+const isExplicitBCE = require('./lib/isExplicitBCE');
 
 function bigmoment(input, options = {}){
   if(typeof input !== 'string'){
     // undefined, integer, new Date()
     return moment(input);
   }
+
+
 
 	if(isPartialDate(input)){ //not a complete moment string date
 		var momentInput;
@@ -31,6 +34,12 @@ function bigmoment(input, options = {}){
     let momentObject = moment(input);
     momentObject._formatName = 'week';
     return momentObject;
+  }
+
+  //14 January 0027 BCE
+  if(isExplicitBCE(input)){
+    let cleanInput = input.replace(' BCE', '')
+    return moment(cleanInput);
   }
 
   let defaultDateFormat = options.dateFormat || "Y-MM-DD HH:mm:ss"

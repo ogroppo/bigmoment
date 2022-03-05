@@ -1,5 +1,5 @@
 import test from 'ava';
-import isWeek from './isWeek';
+import isWeek from '../lib/isWeek';
 
 test('bigmoment week test', t => {
   t.is(isWeek(), false);
